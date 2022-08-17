@@ -1,36 +1,46 @@
 {
   "src/lib/components/DashIfcWtg.react.js": {
-    "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
+    "description": "",
     "displayName": "DashIfcWtg",
-    "methods": [],
+    "methods": [
+      {
+        "name": "handleFileUpdate",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
+      },
+      {
+        "name": "loadifc",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
+      },
+      {
+        "name": "ifcloader",
+        "docblock": null,
+        "modifiers": [
+          "async"
+        ],
+        "params": [],
+        "returns": null
+      }
+    ],
     "props": {
       "id": {
         "type": {
           "name": "string"
         },
         "required": false,
-        "description": "The ID used to identify this component in Dash callbacks."
+        "description": "The ID used to identify the container for the IFC viewer component."
       },
-      "label": {
+      "ifc_file_contents": {
         "type": {
           "name": "string"
         },
         "required": true,
-        "description": "A label that will be printed when this component is rendered."
-      },
-      "value": {
-        "type": {
-          "name": "string"
-        },
-        "required": false,
-        "description": "The value displayed in the input."
-      },
-      "setProps": {
-        "type": {
-          "name": "func"
-        },
-        "required": false,
-        "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."
+        "description": "The contents of the ifc file"
       }
     }
   }

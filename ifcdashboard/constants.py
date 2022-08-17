@@ -1,0 +1,1 @@
+IFC_TYPES = ["IfcColumn", "IfcBeam", "IfcWall", "IfcSlab", "IfcCurtainWall", "IfcPlate", "IfcMember", "IfcDoor", "IfcWindow"]
