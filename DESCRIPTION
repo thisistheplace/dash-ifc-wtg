@@ -1,0 +1,13 @@
+Package: dashIfcWtg
+Title: Dash component using IFC.js to view Wind Turbine Generators
+Version: 0.0.1
+Description: Dash component using IFC.js to view Wind Turbine Generators
+Depends: R (>= 3.0.2)
+Imports: 
+Suggests: 
+License: GPL-3.0 + file LICENSE
+URL: https://github.com/thisistheplace/dash-ifc-wtg
+BugReports: https://github.com/thisistheplace/dash-ifc-wtg/issues
+Encoding: UTF-8
+LazyData: true
+KeepSource: true
