@@ -31,20 +31,14 @@ class IfcLayout:
             # dcc.Store stores the intermediate value
             dcc.Store(id='session-id'),
             html.Div(
-                [html.Div([
-                    dcc.Link("Dash", href="https://dash.plotly.com/"),
-                    " / ",
-                    dcc.Link("IFC.js", href="https://ifcjs.github.io/info/"),
-                    " viewer"
-                ])],
-                style={
-                    "padding":"40px",
-                    "fontSize": "40px"
-                }
-            ),
-            dbc.Row([
-                dbc.Col(
-                    [
+                [
+                    html.Div([
+                        dcc.Link("Dash", href="https://dash.plotly.com/"),
+                        " / ",
+                        dcc.Link("IFC.js", href="https://ifcjs.github.io/info/"),
+                        " viewer"
+                    ]),
+                    html.Div(
                         dcc.Upload(
                             id='upload-data',
                             children=html.Div([
@@ -61,26 +55,25 @@ class IfcLayout:
                                 'textAlign': 'center',
                             },
                         ),
-                    ],
-                    style={"padding":"20px"},
-                    width=2
-                ),
-                dbc.Col(
-                    dash_ifc_wtg.DashIfcWtg("ifc_viewer", ""),
-                    style={"padding":"20px"},
-                    width=10
-                ),
-            ], 
-            className="g-0",
-            style={
-                "height": "80vh",
-                "width": "95vw",
-                "padding": "20px"
-            })
-
+                        style={
+                            "paddingTop":"20px"
+                        }
+                    )
+                ],
+                style={
+                    "padding":"20px",
+                    "paddingTop":"40px",
+                    "fontSize": "40px"
+                }
+            ),
+            html.Div(
+                dash_ifc_wtg.DashIfcWtg("ifc_viewer", ""),
+                style={"padding":"20px", "height":"75vh", "width":"100%"},
+            )
         ],
         style={
-            "maxWidth": "100vw"
+            "height": "100%",
+            "width": "100%"
         }
         )
         return layout

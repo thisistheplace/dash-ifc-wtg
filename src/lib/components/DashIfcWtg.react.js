@@ -1,4 +1,5 @@
 import { IfcViewerAPI } from 'web-ifc-viewer';
+import { Color } from 'three';
 import React, {Component, setState} from 'react';
 import PropTypes from 'prop-types';
 // import Loader from './../utils/loader';
@@ -41,7 +42,10 @@ export default class DashIfcWtg extends Component {
 
     componentDidMount() {
         const container = document.getElementById(this.props.id);
-        const viewer = new IfcViewerAPI({container});
+        const viewer = new IfcViewerAPI({
+            container:container,
+            backgroundColor: new Color("#FFFFFF")
+        });
         viewer.addAxes();
         viewer.addGrid();
         viewer.IFC.setWasmPath('../../');
@@ -49,16 +53,35 @@ export default class DashIfcWtg extends Component {
             USE_FAST_BOOLS: true,
             COORDINATE_TO_ORIGIN: true
           });
-        viewer.context.renderer.postProduction.active = true;
+
+        // Don't show edges
+        viewer.context.renderer.postProduction.active = false;
 
         this.viewer = viewer;
+        this.scene = this.viewer.IFC.context.getScene();
 
-        window.onmousemove = viewer.prepickIfcItem;
-        window.ondblclick = viewer.addClippingPlane
+        // Selectors
+        window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();
+        window.onclick = () => viewer.IFC.selector.pickIfcItem(true);
+        window.ondblclick = viewer.IFC.selector.highlightIfcItem(true);
+        // Clear selection
+        window.onkeydown = (event) => {
+            if(event.code === 'KeyC') {
+                viewer.IFC.selector.unpickIfcItems();
+                viewer.IFC.selector.unHighlightIfcItems();
+            }
+        }
     }
 
     loadifc(){
         // this.startLoading();
+
+        // Clear scene
+        //this.scene.remove.apply(this.scene, this.scene.children);
+
+        this.viewer.dispose();
+        this.componentDidMount();
+
         this.ifcloader();
         // this.stopLoading();
     }
@@ -75,7 +98,7 @@ export default class DashIfcWtg extends Component {
                 {/* <div className="loader">
                     <Loader/>
                 </div> */}
-                <div id={this.props.id} style={{ position: 'absolute', height: '100%', width: '100%' }} />
+                <div id={this.props.id} style={{ height: '100%', width: '100%' }} />
                 <style jsx>{`
                     .loader {
                         display: ${this.state.loading};
