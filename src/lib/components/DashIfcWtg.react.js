@@ -2,7 +2,7 @@ import { IfcViewerAPI } from 'web-ifc-viewer';
 import { Color } from 'three';
 import React, {Component, setState} from 'react';
 import PropTypes from 'prop-types';
-// import Loader from './../utils/loader';
+import addOcean from '../environment/Ocean'
 
 export default class DashIfcWtg extends Component {
 
@@ -10,13 +10,11 @@ export default class DashIfcWtg extends Component {
         super(props);
         this.state = {
             ifc_data: props.ifc_file_contents,
-            // loading: "hidden"
         }
         this.handleFileUpdate = this.handleFileUpdate.bind(this);
         this.loadifc = this.loadifc.bind(this);
         this.ifcloader = this.ifcloader.bind(this);
-        // this.startLoading = this.startLoading.bind(this);
-        // this.stopLoading = this.stopLoading.bind(this);
+        this.scene = null;
     }
 
     componentDidUpdate(prevProps){
@@ -32,18 +30,10 @@ export default class DashIfcWtg extends Component {
         this.loadifc();
     }
 
-    // startLoading(){
-    //     setState({loading : "block"});
-    // }
-
-    // stopLoading(){
-    //     setState({loading : "hidden"});
-    // }
-
     componentDidMount() {
         const container = document.getElementById(this.props.id);
         const viewer = new IfcViewerAPI({
-            container:container,
+            container: container,
             backgroundColor: new Color("#FFFFFF")
         });
         viewer.addAxes();
@@ -60,6 +50,9 @@ export default class DashIfcWtg extends Component {
         this.viewer = viewer;
         this.scene = this.viewer.IFC.context.getScene();
 
+        // Apply environmental components
+        addOcean(this.scene);
+
         // Selectors
         window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();
         window.onclick = () => viewer.IFC.selector.pickIfcItem(true);
@@ -74,16 +67,10 @@ export default class DashIfcWtg extends Component {
     }
 
     loadifc(){
-        // this.startLoading();
-
-        // Clear scene
-        //this.scene.remove.apply(this.scene, this.scene.children);
-
+        // Clear the scene before loading a new IFC model
         this.viewer.dispose();
         this.componentDidMount();
-
         this.ifcloader();
-        // this.stopLoading();
     }
 
     ifcloader = async() => {
@@ -95,20 +82,7 @@ export default class DashIfcWtg extends Component {
     render() {
         return (
             <div style={{height: '100%', width: '100%'}}>
-                {/* <div className="loader">
-                    <Loader/>
-                </div> */}
                 <div id={this.props.id} style={{ height: '100%', width: '100%' }} />
-                <style jsx>{`
-                    .loader {
-                        display: ${this.state.loading};
-                        position: absolute;
-                        z-index: 3;
-                        background: #fcfcfc;
-                        width: 100%;
-                        height: 100%;
-                    }
-                `}</style>
             </div>
         );
     }
@@ -125,5 +99,5 @@ DashIfcWtg.propTypes = {
     /**
      * The contents of the ifc file
      */
-     ifc_file_contents: PropTypes.string.isRequired,
+    ifc_file_contents: PropTypes.string.isRequired,
 };
