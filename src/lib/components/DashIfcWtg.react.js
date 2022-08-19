@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import { IfcViewerAPI } from 'web-ifc-viewer';
-import { Color } from 'three';
 
+import { applyFullScreen } from '../ui/fullscreen';
 import Ocean from '../environment/Ocean';
 import Daytime from '../environment/Daytime';
 
-export default class DashIfcWtg extends Component {
+class DashIfcWtg extends Component {
 
     constructor(props) {
         super(props);
@@ -18,6 +18,7 @@ export default class DashIfcWtg extends Component {
         this.loadifc = this.loadifc.bind(this);
         this.ifcloader = this.ifcloader.bind(this);
         this.scene = null;
+        this.viewer = null;
     }
 
     componentDidUpdate(prevProps){
@@ -98,9 +99,7 @@ export default class DashIfcWtg extends Component {
 
     render() {
         return (
-            <div style={{height: '100%', width: '100%'}}>
-                <div id={this.props.id} style={{ height: '100%', width: '100%' }} />
-            </div>
+            <div id={this.props.id} style={{ height: '100%', width: '100%' }} />
         );
     }
 }
@@ -118,3 +117,5 @@ DashIfcWtg.propTypes = {
      */
     ifc_file_contents: PropTypes.string.isRequired,
 };
+
+export default applyFullScreen(DashIfcWtg);
