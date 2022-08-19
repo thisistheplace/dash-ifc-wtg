@@ -16,8 +16,6 @@ export default class Daytime extends IfcComponent {
 
         var uniforms = this.sky.material.uniforms;
 
-        console.log(uniforms);
-
         uniforms[ 'turbidity' ].value = 10;
         uniforms[ 'rayleigh' ].value = 0.5;
         uniforms[ 'mieCoefficient' ].value = 0.02;
