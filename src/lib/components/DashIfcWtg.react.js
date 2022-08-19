@@ -1,8 +1,11 @@
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import { IfcViewerAPI } from 'web-ifc-viewer';
 import { Color } from 'three';
-import React, {Component, setState} from 'react';
-import PropTypes from 'prop-types';
-import addOcean from '../environment/Ocean'
+
+import Ocean from '../environment/Ocean';
+import Daytime from '../environment/Daytime';
 
 export default class DashIfcWtg extends Component {
 
@@ -34,10 +37,9 @@ export default class DashIfcWtg extends Component {
         const container = document.getElementById(this.props.id);
         const viewer = new IfcViewerAPI({
             container: container,
-            backgroundColor: new Color("#FFFFFF")
+            // backgroundColor: new Color("#FFFFFF")
         });
-        viewer.addAxes();
-        viewer.addGrid();
+        viewer.axes.setAxes();
         viewer.IFC.setWasmPath('../../');
         viewer.IFC.loader.ifcManager.applyWebIfcConfig({
             USE_FAST_BOOLS: true,
@@ -50,8 +52,9 @@ export default class DashIfcWtg extends Component {
         this.viewer = viewer;
         this.scene = this.viewer.IFC.context.getScene();
 
-        // Apply environmental components
-        addOcean(this.scene);
+        // Create environmental components
+        this.sky = this.createSky();
+        this.ocean = this.createOcean(this.sky.sun);
 
         // Selectors
         window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();
@@ -66,8 +69,17 @@ export default class DashIfcWtg extends Component {
         }
     }
 
+    createOcean(sun){
+        return new Ocean(this.viewer.IFC.context, sun);
+    }
+
+    createSky(){
+        return new Daytime(this.viewer.IFC.context);
+    }
+
     loadifc(){
         // Clear the scene before loading a new IFC model
+        this.disposeEnvironment();
         this.viewer.dispose();
         this.componentDidMount();
         this.ifcloader();
@@ -77,6 +89,11 @@ export default class DashIfcWtg extends Component {
         var blob = new Blob([this.props.ifc_file_contents], { type: 'text/plain', endings: "native" });
         const ifc_file = new File([blob], "file.ifc");
         await this.viewer.IFC.loadIfc(ifc_file, true);
+    }
+
+    disposeEnvironment(){
+        this.ocean.removeFromScene();
+        this.sky.removeFromScene();
     }
 
     render() {

@@ -11,6 +11,25 @@
         "returns": null
       },
       {
+        "name": "createOcean",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "sun",
+            "type": null
+          }
+        ],
+        "returns": null
+      },
+      {
+        "name": "createSky",
+        "docblock": null,
+        "modifiers": [],
+        "params": [],
+        "returns": null
+      },
+      {
         "name": "loadifc",
         "docblock": null,
         "modifiers": [],
@@ -23,6 +42,13 @@
         "modifiers": [
           "async"
         ],
+        "params": [],
+        "returns": null
+      },
+      {
+        "name": "disposeEnvironment",
+        "docblock": null,
+        "modifiers": [],
         "params": [],
         "returns": null
       }
