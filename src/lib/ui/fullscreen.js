@@ -10,7 +10,7 @@ export const applyFullScreen = (Component) => {
                 <i class="fa fa-expand"/>
             </button>
             <FullScreen handle={handle}>
-                <Component {...props} />;
+                <Component {...props} />
             </FullScreen>
         </div>;
     };
