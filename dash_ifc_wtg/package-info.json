@@ -1,6 +1,6 @@
 {
   "name": "dash_ifc_wtg",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dash component using IFC.js to view Wind Turbine Generators",
   "repository": {
     "type": "git",
