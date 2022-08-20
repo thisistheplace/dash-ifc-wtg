@@ -15,7 +15,7 @@ class DashIfcWtg extends Component {
             ifc_data: props.ifc_file_contents,
         }
         this.handleFileUpdate = this.handleFileUpdate.bind(this);
-        this.loadifc = this.loadifc.bind(this);
+        this.loadIfc = this.loadIfc.bind(this);
         this.ifcloader = this.ifcloader.bind(this);
         this.scene = null;
         this.viewer = null;
@@ -31,14 +31,13 @@ class DashIfcWtg extends Component {
     handleFileUpdate(){
         const {ifc_file_contents} = this.props;
         // Update the viewer
-        this.loadifc();
+        this.loadIfc();
     }
 
     componentDidMount() {
         const container = document.getElementById(this.props.id);
         const viewer = new IfcViewerAPI({
             container: container,
-            // backgroundColor: new Color("#FFFFFF")
         });
         viewer.axes.setAxes();
         viewer.IFC.setWasmPath('../../');
@@ -78,7 +77,7 @@ class DashIfcWtg extends Component {
         return new Daytime(this.viewer.IFC.context);
     }
 
-    loadifc(){
+    loadIfc(){
         // Clear the scene before loading a new IFC model
         this.disposeEnvironment();
         this.viewer.dispose();
@@ -99,7 +98,7 @@ class DashIfcWtg extends Component {
 
     render() {
         return (
-            <div id={this.props.id} style={{ height: '100%', width: '100%' }} />
+            <div id={this.props.id} className={"fullsize"}/>
         );
     }
 }

@@ -30,7 +30,7 @@
         "returns": null
       },
       {
-        "name": "loadifc",
+        "name": "loadIfc",
         "docblock": null,
         "modifiers": [],
         "params": [],
